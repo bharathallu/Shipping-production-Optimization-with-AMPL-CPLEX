@@ -1,0 +1,44 @@
+option solver cplex;
+reset;
+model basic.mod;
+data basic.dat;
+solve;
+option display_eps 0.0001;
+param Bsc_sol {SITE} >=0;			# The basic solution
+param New_sol {SITE} >=0;			# New solution
+let {i in SITE} Bsc_sol[i] := W[i];
+param Inc {INGR,SITE} >= 0;
+let {m in INGR , i in SITE} Inc[m,i] := 0.01 * SI[m,i];
+# Increment of ingredients shipping cost equal to 1% of the basic shipping cost
+for {1..1000} {
+	let {m in INGR , i in SITE} SI[m,i] := SI[m,i] + Inc[m,i];
+	solve;
+	let {i in SITE} New_sol[i] := W[i];
+	if  sum {i in SITE} (abs(Bsc_sol[i] - New_sol[i])) >= 1  then {
+		printf "\n" >> 'PartB.log';
+		printf "Current shipping costs of the ingredients are: ($/ton) \n" >> 'PartB.log';
+		display SI >> 'PartB.log';
+		printf "------ OPTIMAL OBJECTIVE VALUE ------------------------------------\n\n" >> 'PartB.log';
+		printf "The minimum cost of expansion is: ($/year)\n" >> 'PartB.log';
+		display Total_Cost >> 'PartB.log';
+		printf "\n" >> 'PartB.log';
+		printf "------ OPTIMAL SOLUTION --------------------------------------------\n\n" >> 'PartB.log';
+		printf "Here is details of the minimum-cost expansion plan:\n\n" >> 'PartB.log';
+		printf "(i) Operating sites: " >> 'PartB.log';
+		printf "(1 indicates the site will be operating)\n" >> 'PartB.log';
+		display W >> 'PartB.log';
+		printf "\n" >> 'PartB.log';
+		printf "(ii) Amount of ingredients to be shipped to each site (ton/year):\n" >> 'PartB.log';
+		display X >> 'PartB.log';
+		printf "\n" >> 'PartB.log';
+		printf "(iii) Distribution of products among the customers (ton/year):\n" >> 'PartB.log';
+		display Y >> 'PartB.log';
+		printf "\n" >> 'PartB.log';
+		printf "(iv) States with operating site:\n" >> 'PartB.log';
+		printf "(1 indicates the state will have at least one operating site)\n" >> 'PartB.log';
+		display Z >> 'PartB.log';
+		printf "\n" >> 'PartB.log';
+		printf "-------------------------------------------------------------------\n" >> 'PartB.log';
+		quit;
+		}
+};

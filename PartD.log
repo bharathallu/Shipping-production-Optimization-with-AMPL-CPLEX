@@ -1,0 +1,100 @@
+
+------ OPTIMAL OBJECTIVE VALUE ------------------------------------
+
+The minimum cost of expansion is: ($/year)
+Total_Cost = 697990
+
+
+------ OPTIMAL SOLUTION --------------------------------------------
+
+Here is details of the minimum-cost expansion plan:
+
+(i) Operating sites: (1 indicates the site will be operating)
+W [*] :=
+     Yuma  0
+   Fresno  0
+   Tucson  0.0077
+   Pomona  0.0109
+  SantaFe  0.0042
+FlagStaff  0
+ LasVegas  0
+ StGeorge  0.0039
+;
+
+
+(ii) Amount of ingredients to be shipped to each site (ton/year):
+X [*,*] (tr)
+:           CORN  WHEAT POTATO    :=
+Yuma           0      0      0
+Fresno         0      0      0
+Tucson      3070   2410   2220
+Pomona      4340   3400   3160
+SantaFe     1650   1295   1255
+FlagStaff      0      0      0
+LasVegas       0      0      0
+StGeorge    1520   1245   1135
+;
+
+
+(iii) Production plan for each site (ton/year):
+Production [*,*]
+:         Regular GrOnion PartyMix    :=
+Yuma           0       0        0
+Fresno         0       0        0
+Tucson      2700    1800     3200
+Pomona      3800    2600     4500
+SantaFe     1400    1100     1700
+FlagStaff      0       0        0
+LasVegas       0       0        0
+StGeorge    1300     900     1700
+;
+
+
+(iv) Distribution of products among the customers (ton/year):
+Y [Regular,*,*]
+:          Jones   YZCO SquareQ AJStores SunQuest HarmsPath    :=
+Yuma           0      0      0        0        0        0
+Fresno         0      0      0        0        0        0
+Tucson         0      0   1200        0        0     1500
+Pomona         0      0      0     1900     1900        0
+SantaFe        0   1400      0        0        0        0
+FlagStaff      0      0      0        0        0        0
+LasVegas       0      0      0        0        0        0
+StGeorge    1300      0      0        0        0        0
+
+ [GrOnion,*,*]
+:         Jones   YZCO SquareQ AJStores SunQuest HarmsPath    :=
+Yuma          0      0      0        0        0        0
+Fresno        0      0      0        0        0        0
+Tucson        0      0    800        0        0     1000
+Pomona        0      0      0     1200     1400        0
+SantaFe       0   1100      0        0        0        0
+FlagStaff     0      0      0        0        0        0
+LasVegas      0      0      0        0        0        0
+StGeorge    900      0      0        0        0        0
+
+ [PartyMix,*,*]
+:          Jones   YZCO SquareQ AJStores SunQuest HarmsPath    :=
+Yuma           0      0      0        0        0        0
+Fresno         0      0      0        0        0        0
+Tucson         0      0   1800        0        0     1400
+Pomona         0      0      0     2200     2300        0
+SantaFe        0   1700      0        0        0        0
+FlagStaff      0      0      0        0        0        0
+LasVegas       0      0      0        0        0        0
+StGeorge    1700      0      0        0        0        0
+;
+
+
+(v) States with operating site:
+(1 indicates the state will have at least one operating site)
+Z [*] :=
+AZ  7.7e-09
+CA  1.09e-08
+NM  4.2e-09
+NV  0
+UT  3.9e-09
+;
+
+
+-------------------------------------------------------------------
